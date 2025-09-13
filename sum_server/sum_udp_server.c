@@ -5,16 +5,17 @@
 #include <unistd.h>
 #include <arpa/inet.h>
 #include <sys/socket.h>
+#include "sum_message.h"
 
 #define PORT 8080
-#define BUFFER_SIZE (2 * sizeof(int)) // 接收两个 int
+#define BUFFER_SIZE sizeof(MessageSum)
 
 int main() {
     int sockfd;
     struct sockaddr_in server_addr, client_addr;
     socklen_t client_len = sizeof(client_addr);
     char buffer[BUFFER_SIZE];
-    int nums[2];
+    MessageSum m_msg;
     int sum;
 
     // 创建 UDP socket
@@ -48,16 +49,26 @@ int main() {
         }
 
         // 将接收到的数据复制到整数数组中（注意字节序问题）
-        memcpy(nums, buffer, BUFFER_SIZE);
+        memcpy(&m_msg, buffer, BUFFER_SIZE);
 
         // 计算和
-        sum = nums[0] + nums[1];
+        if (m_msg.head == 0xa5)
+        {
+            if(m_msg.sum == (m_msg.head + m_msg.number1 + m_msg.number2)){
+                sum = m_msg.number1 + m_msg.number2;
+                printf("Received: %d + %d = %d\n", m_msg.number1, m_msg.number2, sum);
 
-        printf("Received: %d + %d = %d\n", nums[0], nums[1], sum);
-
-        // 发送结果回客户端
-        sendto(sockfd, &sum, sizeof(sum), 0,
-               (const struct sockaddr *)&client_addr, client_len);
+                // 发送结果回客户端
+                sendto(sockfd, &sum, sizeof(sum), 0,
+                    (const struct sockaddr *)&client_addr, client_len);
+            }
+            else{
+                printf("sum error");
+            }
+        }
+        else{
+            printf("header error");
+        }
     }
 
     close(sockfd);

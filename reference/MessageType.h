@@ -12,7 +12,7 @@ typedef struct{
 typedef struct {
     uint8_t head; // 0xa5
     Body_Data body_data;
-    uint8_t sum; // sum of head + body_data
+    uint8_t sum;
 } Message_Body; //Body Message structure
 
 

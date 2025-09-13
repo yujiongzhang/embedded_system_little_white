@@ -22,6 +22,22 @@
 
 1、send result msg using udp socket 
 
+```c
+typedef struct{
+    uint8_t MBP;
+    uint8_t SBP;
+    uint8_t DBP;
+    uint8_t HR;
+}Body_Data; // body data structure
+
+typedef struct {
+    uint8_t head; // 0xa5
+    Body_Data body_data;
+    uint8_t sum; // sum of head + body_data
+} Message_Body; //Body Message structure
+
+```
+
 2、send result and pressure with 2 threads
 
 3、send number1 and number2 and wait for result

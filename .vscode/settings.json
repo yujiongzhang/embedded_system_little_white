@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "tuple": "c",
+        "system_error": "c",
+        "thread-shared-types.h": "c"
+    }
+}

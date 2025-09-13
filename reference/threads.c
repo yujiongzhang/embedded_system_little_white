@@ -18,7 +18,7 @@ void* thread_function_2(void* arg) {
     int thread_id = *((int*)arg);
     for (int i = 0; i < 5; i++) {
         printf("线程 %d 执行: %d\n", thread_id, i + 1);
-        sleep(1); // 模拟耗时操作
+        sleep(2); // 模拟耗时操作
     }
     pthread_exit(NULL);
 }

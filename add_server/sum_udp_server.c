@@ -10,6 +10,32 @@
 #define PORT 8080
 #define BUFFER_SIZE sizeof(MessageSum)
 
+typedef int (*calculatefunction)(int a, int b);
+
+//task2： 加减乘除 4 个 服务
+int calc_add(int a, int b) {
+    return a + b;
+}
+
+int calc_sub(int a, int b) {
+    return a - b;
+}
+
+int calc_multi(int a, int b) {
+    return a * b;
+}
+
+int calc_div(int a, int b) {
+    return (b != 0) ? a / b : 0;  // 防止除以0
+}
+calculatefunction calculatable[] = {
+    calc_add,
+    calc_sub,
+    calc_multi,
+    calc_div
+};
+
+
 int main() {
     int sockfd;
     struct sockaddr_in server_addr, client_addr;
@@ -54,12 +80,11 @@ int main() {
         // 计算和
         if (m_msg.head == 0xa5)
         {
-            if(m_msg.sum == (m_msg.head + m_msg.number1 + m_msg.number2)){
-                sum = m_msg.number1 + m_msg.number2;
-                printf("Received: %d + %d = %d\n", m_msg.number1, m_msg.number2, sum);
+            if(m_msg.sum == (m_msg.head + m_msg.number1 + m_msg.number2 + m_msg.mode)){
+                int result = calculatable[m_msg.mode](m_msg.number1, m_msg.number2);
 
                 // 发送结果回客户端
-                sendto(sockfd, &sum, sizeof(sum), 0,
+                sendto(sockfd, &result, sizeof(sum), 0,
                     (const struct sockaddr *)&client_addr, client_len);
             }
             else{

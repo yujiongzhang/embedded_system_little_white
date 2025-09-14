@@ -17,11 +17,12 @@ int main() {
     char buffer[BUFFER_SIZE];
     MessageSum m_msg = {
         .head = 0xa5,
+        .calculate_mode = CALC_MODE_SUB,
         .number1 = 11,
         .number2 = 12,
         .sum = 0
     };
-    m_msg.sum = m_msg.head + m_msg.number1 + m_msg.number2;
+    m_msg.sum = m_msg.head + m_msg.calculate_mode + m_msg.number1 + m_msg.number2;
 
     int result;
     // 创建 UDP socket

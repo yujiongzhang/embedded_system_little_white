@@ -1,0 +1,25 @@
+<!-- templates/welcome.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Welcome</title>
+</head>
+<body>
+    <h1>Hello, {{ name }}!</h1>
+
+    {% if is_premium %}
+        <p>You are a <strong>premium member</strong>. Thank you!</p>
+    {% else %}
+        <p>You are a regular user. Consider upgrading!</p>
+    {% endif %}
+
+    <h2>Your Skills:</h2>
+    <ul>
+        {% for skill in skills %}
+            <li>{{ loop.index }}. {{ skill|title }}</li>
+        {% endfor %}
+    </ul>
+
+    <p>Total skills: {{ skills|length }}</p>
+</body>
+</html>

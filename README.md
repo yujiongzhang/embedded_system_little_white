@@ -18,7 +18,7 @@
 
 2、Code Architecture before coding
 
-## Task 1
+## Task 01
 
 1、send result msg using udp socket 
 
@@ -41,3 +41,20 @@ typedef struct {
 2、send result and pressure with 2 threads
 
 3、send number1 and number2 and wait for result
+
+## Task 02
+
+1、传入**双指针** 重写 creat_message(m_msg, ADD_MODE, 3, 3);
+
+2、json 是什么
+
+- 第三方库实现 python 、c
+
+- 网络发送json数据（序列化为json）
+
+3、tcp学习
+
+
+## reference
+
+https://subingwen.cn/linux

@@ -16,7 +16,25 @@
 #define MULTI_MODE 2u
 #define DEV_MODE 3u
 
-void creat_message(MessageSum* m_msg, uint8_t mode, uint16_t number1, uint16_t number2){
+// void creat_message(MessageSum* m_msg, uint8_t mode, uint16_t number1, uint16_t number2){
+//     m_msg->head = 0xA5;
+//     m_msg->mode = mode;
+//     m_msg->number1 = number1;
+//     m_msg->number2 = number2;
+//     m_msg->sum = 0xA5 + mode + number1 + number2;
+// }
+
+void creat_message(MessageSum** m_msg, uint8_t mode, uint16_t number1, uint16_t number2){
+    *m_msg = (MessageSum*)malloc(sizeof(MessageSum));
+    (*m_msg)->head = 0xA5;
+    (*m_msg)->mode = mode;
+    (*m_msg)->number1 = number1;
+    (*m_msg)->number2 = number2;
+    (*m_msg)->sum = 0xA5 + mode + number1 + number2;
+}
+
+MessageSum* creat_message_1(uint8_t mode, uint16_t number1, uint16_t number2){
+    MessageSum* m_msg = (MessageSum*)malloc(sizeof(MessageSum));
     m_msg->head = 0xA5;
     m_msg->mode = mode;
     m_msg->number1 = number1;
@@ -24,13 +42,16 @@ void creat_message(MessageSum* m_msg, uint8_t mode, uint16_t number1, uint16_t n
     m_msg->sum = 0xA5 + mode + number1 + number2;
 }
 
+
 int main() {
     int sockfd;
     struct sockaddr_in server_addr;
     char buffer[BUFFER_SIZE];
-   
-    MessageSum* m_msg = (MessageSum*)malloc(sizeof(MessageSum));
-    creat_message(m_msg, ADD_MODE, 3, 3);
+    
+    // MessageSum* m_msg;
+    // creat_message(&m_msg, ADD_MODE, 3, 3);
+
+    MessageSum *m_msg = creat_message_1(ADD_MODE, 3, 3);
 
     int result;
     // 创建 UDP socket

@@ -46,13 +46,15 @@ typedef struct {
 
 1、传入**双指针** 重写 creat_message(m_msg, ADD_MODE, 3, 3);
 
-2、json 是什么
+2、python debug 相对路径设置
+
+3、json 是什么
 
 - 第三方库实现 python 、c
 
 - 网络发送json数据（序列化为json）
 
-3、tcp学习
+4、tcp学习
 
 
 ## reference
